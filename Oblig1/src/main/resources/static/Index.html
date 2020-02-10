@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Oblig 1</title>
+    <script src="Oblig1.js">
+    </script>
+</head>
+<body>
+<h1>Bestilling av biletter</h1>
+Velg film <select id="filmer">
+    <option value="">---</option>
+    <option value="Ringenes Herre">Ringenes Herre</option>
+    <option value="Harry Potter">Harry Potter</option>
+    <option value="Star Wars">Star Wars</option>
+</select>
+<br/>
+<table id="tabell">
+    <tr>
+        <td>Antall</td>
+        <td><input type="text" id="antall"/></td>
+        <td id="tomAntall"></td>
+    </tr>
+    <tr>
+        <td>Fornavn</td>
+        <td><input type="text" id="fornavn"/></td>
+        <td id="tomFor"></td>
+    </tr>
+    <tr>
+        <td>Etternavn</td>
+        <td><input type="text" id="etternavn"/></td>
+        <td id="tomEtter"></td>
+    </tr>
+    <tr>
+        <td>Telefonnr</td>
+        <td><input type="text" id="telefon"/></td>
+        <td id="tomTlf"></td>
+    </tr>
+    <tr>
+        <td>Epost</td>
+        <td><input type="text" id="epost"/></td>
+        <td id="tomEpost"></td>
+    </tr>
+</table>
+<button onclick="kjop()">Kjøp biletter</button>
+<h2>Alle biletter</h2>
+<div id="biletter"></div>
+<button onclick="slett()">Slett biletter</button>
+</body>
+</html>

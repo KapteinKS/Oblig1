@@ -1,16 +1,14 @@
-let biletter = [];
-
 function kjop() {
     let bilett = {
-        film : document.getElementById("filmer").value,
-        antall : document.getElementById("antall").value,
-        fornavn: document.getElementById("fornavn").value,
-        etternavn: document.getElementById("etternavn").value,
-        telefonnr: document.getElementById("telefon").value,
-        epost : document.getElementById("epost").value
+        film : $("#filmer").val(),
+        antall : $("#antall").val(),
+        fornavn: $("#fornavn").val(),
+        etternavn: $("#etternavn").val(),
+        telefonnr: $("#telefon").val(),
+        epost : $("#epost").val()
     };
 
-    const tallAntall = Number(bilett.antall);
+    let tallAntall = parseInt(bilett.antall, 10);
 
     if (bilett.film === "") {
         {
@@ -21,65 +19,75 @@ function kjop() {
     if(isNaN(tallAntall)){
         alert("Kun heltall kan skrives inn i antall");
     } else if(bilett.antall === ""){
-        document.getElementById("tomAntall").innerHTML = "Må skrive noe i antall";
+        $("#tomAntall").html("Må skrive noe i antall");
     } else {
-        document.getElementById("tomAntall").innerHTML = "";
+        $("#tomAntall").html("");
     }
 
     if(bilett.fornavn === ""){
-        document.getElementById("tomFor").innerHTML = "Må skrive noe i fornavn";
+        $("#tomFor").html("Må skrive noe i fornavn");
     } else {
-        document.getElementById("tomFor").innerHTML = "";
+        $("#tomFor").html("");
     }
 
     if(bilett.etternavn === ""){
-        document.getElementById("tomEtter").innerHTML = "Må skrive noe i etternavn";
+        $("#tomEtter").html("Må skrive noe i etternavn");
     } else {
-        document.getElementById("tomEtter").innerHTML = "";
+        $("#tomEtter").html("");
     }
 
     if(bilett.telefonnr === ""){
-        document.getElementById("tomTlf").innerHTML = "Må skrive noe i telefonnr";
+        $("#tomTlf").html("Må skrive noe i telefonnr");
     } else {
-        document.getElementById("tomTlf").innerHTML = "";
+        $("#tomTlf").html("");
     }
 
     if(bilett.epost === ""){
-        document.getElementById("tomEpost").innerHTML = "Må skrive noe i epost";
+        $("#tomEpost").html("Må skrive noe i epost");
     } else {
-        document.getElementById("tomEpost").innerHTML = "";
+        $("#tomEpost").html("");
     }
 
-    if(bilett.film != "" && bilett.antall != "" && bilett.fornavn != "" &&
-        bilett.etternavn != "" && bilett.telefonnr != "" && bilett.epost != ""){
-        biletter.push(bilett);
-        let ut = "";
-        for(let b of biletter){
-            ut +=
-                "<tr>" +
-                "<td>" + b.film + "</td>\n" +
-                "<td>" + b.antall + "</td>\n" +
-                "<td>" + b.fornavn + "</td>\n" +
-                "<td>" + b.etternavn + " </td>\n" +
-                "<td>" + b.telefonnr + "</td>\n" +
-                "<td>" + b.epost + "</td>" +
-                "</tr>\n";
-        }
-        document.getElementById("biletter").innerHTML =" <table>\n" +
-            "<tr>\n" +
-            "<th>Film</th>\n" +
-            "<th>Antal</th>\n" +
-            "<th>Fornavn</th>\n" +
-            "<th>Etternavn</th>\n" +
-            "<th>Telefonnr</th>\n" +
-            "<th>Epost</th>\n" +
-            "</tr>\n"
-            + ut +
-            "</table>";
+    if(bilett.film !== "" && bilett.antall !== "" && bilett.fornavn !== "" &&
+        bilett.etternavn !== "" && bilett.telefonnr !== "" && bilett.epost !== "" && !isNaN(tallAntall)){
+
+        $.post("/lagre", bilett, function () {
+            hentAlle();
+        });
+        $("#filmer").prop('selectedIndex', 0);
+        $("#antall").val("");
+        $("#fornavn").val("");
+        $("#etternavn").val("");
+        $("#telefon").val("");
+        $("#epost").val("");
+
     }
 }
 
+function hentAlle() {
+    $.get("/hent", function (billetter) {
+        formater(billetter)
+    });
+}
+
+function formater(billetter) {
+    let ut = "";
+    for(let b of billetter){
+        ut +=
+            "<tr><td>" + b.film + "</td><td>" + b.antall + "</td><td>" + b.fornavn + "</td>\n" +
+            "<td>" + b.etternavn + " </td><td>" + b.telefonnr + "</td><td>" + b.epost + "</td>" +
+            "</tr>\n";
+    }
+    document.getElementById("biletter").innerHTML =" <table>\n" +
+        "<tr><th>Film</th><th>Antal</th><th>Fornavn</th><th>Etternavn</th>\n" +
+        "<th>Telefonnr</th><th>Epost</th></tr>\n"
+        + ut +
+        "</table>";
+}
 function slett() {
-    biletter = [];
-    document.getElementById("biletter").innerHTML = "";
+    $.post("/slett", function () {
+
+    });
+
+    $("#biletter").html("");
 }

@@ -18,34 +18,30 @@ function kjop() {
 
     if(isNaN(tallAntall)){
         alert("Kun heltall kan skrives inn i antall");
-    } else if(bilett.antall === ""){
-        $("#tomAntall").html("Må skrive noe i antall");
-    } else {
-        $("#tomAntall").html("");
     }
 
     if(bilett.fornavn === ""){
-        $("#tomFor").html("Må skrive noe i fornavn");
+        $("#fornavn").attr('placeholder', "Skriv inn fornavn");
     } else {
-        $("#tomFor").html("");
+        $("#fornavn").attr('placeholder', "");
     }
 
     if(bilett.etternavn === ""){
-        $("#tomEtter").html("Må skrive noe i etternavn");
+        $("#etternavn").attr('placeholder', "Skriv inn etternavn");
     } else {
-        $("#tomEtter").html("");
+        $("#etternavn").attr('placeholder', "");
     }
 
     if(bilett.telefonnr === ""){
-        $("#tomTlf").html("Må skrive noe i telefonnr");
+        $("#telefon").attr('placeholder', "Skriv inn telefonnr");
     } else {
-        $("#tomTlf").html("");
+        $("#telefon").attr('placeholder', "");
     }
 
     if(bilett.epost === ""){
-        $("#tomEpost").html("Må skrive noe i epost");
+        $("#epost").attr('placeholder', "Skriv inn e-postadresse");
     } else {
-        $("#tomEpost").html("");
+        $("#epost").attr('placeholder', "");
     }
 
     if(bilett.film !== "" && bilett.antall !== "" && bilett.fornavn !== "" &&
@@ -60,29 +56,37 @@ function kjop() {
         $("#etternavn").val("");
         $("#telefon").val("");
         $("#epost").val("");
-
     }
 }
 
 function hentAlle() {
     $.get("/hent", function (billetter) {
-        formater(billetter)
+        formater(billetter);
     });
 }
 
 function formater(billetter) {
-    let ut = "";
+    let ut = " <table class='table'>" +
+        "<thead class='thead-dark'> " +
+        "<tr>" +
+        "<th scope='col'>Film</th>" +
+        "<th scope='col'>Antal</th>" +
+        "<th scope='col'>Fornavn</th>" +
+        "<th scope='col'>Etternavn</th>" +
+        "<th scope='col'>Telefonnr</th>" +
+        "<th scope='col'>Epost</th>" +
+        "</tr>" +
+        "</thead>" +
+        "<tbody>";
     for(let b of billetter){
         ut +=
             "<tr><td>" + b.film + "</td><td>" + b.antall + "</td><td>" + b.fornavn + "</td>\n" +
             "<td>" + b.etternavn + " </td><td>" + b.telefonnr + "</td><td>" + b.epost + "</td>" +
             "</tr>\n";
     }
-    document.getElementById("biletter").innerHTML =" <table>\n" +
-        "<tr><th>Film</th><th>Antal</th><th>Fornavn</th><th>Etternavn</th>\n" +
-        "<th>Telefonnr</th><th>Epost</th></tr>\n"
-        + ut +
-        "</table>";
+    ut += "</tbody>" +
+    "</table>";
+    $("#biletter").html(ut);
 }
 function slett() {
     $.post("/slett", function () {

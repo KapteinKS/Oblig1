@@ -4,47 +4,52 @@
     <meta charset="UTF-8">
     <title>Oblig 1</title>
     <script src="Oblig1.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(hentAlle());
+    </script>
 </head>
 <body>
-<h1>Bestilling av biletter</h1>
-Velg film <select id="filmer">
-    <option value="">---</option>
-    <option value="Ringenes Herre">Ringenes Herre</option>
-    <option value="Harry Potter">Harry Potter</option>
-    <option value="Star Wars">Star Wars</option>
-</select>
-<br/>
-<table id="tabell">
-    <tr>
-        <td>Antall</td>
-        <td><input type="text" id="antall"/></td>
-        <td id="tomAntall"></td>
-    </tr>
-    <tr>
-        <td>Fornavn</td>
-        <td><input type="text" id="fornavn"/></td>
-        <td id="tomFor"></td>
-    </tr>
-    <tr>
-        <td>Etternavn</td>
-        <td><input type="text" id="etternavn"/></td>
-        <td id="tomEtter"></td>
-    </tr>
-    <tr>
-        <td>Telefonnr</td>
-        <td><input type="text" id="telefon"/></td>
-        <td id="tomTlf"></td>
-    </tr>
-    <tr>
-        <td>Epost</td>
-        <td><input type="text" id="epost"/></td>
-        <td id="tomEpost"></td>
-    </tr>
-</table>
-<button onclick="kjop()">Kjøp biletter</button>
-<h2>Alle biletter</h2>
-<div id="biletter"></div>
-<button onclick="slett()">Slett biletter</button>
+<div class="container">
+    <h1>Bestilling av biletter</h1>
+    <div class="form-group">
+        Velg film <select class="form-control col-sm-6" id="filmer">
+            <option value="">---</option>
+            <option value="Ringenes Herre">Ringenes Herre</option>
+            <option value="Harry Potter">Harry Potter</option>
+            <option value="Star Wars">Star Wars</option>
+        </select>
+    </div>
+    <br/>
+    <form>
+        <div class="form-group">
+            <label for="antall">Antall</label>
+            <input type="number" class="form-control col-sm-6" id="antall" placeholder="">
+        </div>
+        <div class="form-group">
+            <label for="fornavn">Fornavn</label>
+            <input type="text" class="form-control col-sm-6" id="fornavn" placeholder="">
+        </div>
+        <div class="form-group">
+            <label for="etternavn">Etternavn</label>
+            <input type="text" class="form-control col-sm-6" id="etternavn">
+        </div>
+        <div class="form-group">
+            <label for="telefon">Telefon</label>
+            <input type="tel" class="form-control col-sm-6" id="telefon">
+        </div>
+        <div class="form-group">
+            <label for="epost">E-post</label>
+            <input type="email" class="form-control col-sm-6" id="epost">
+        </div>
+    </form>
+
+    <button type="button" class="btn-primary" onclick="kjop()">Kjøp biletter</button>
+    <h2>Alle biletter</h2>
+    <div id="biletter"></div>
+    <button type="button" class="btn-warning" onclick="slett()">Slett biletter</button>
+</div>
 </body>
 </html>
